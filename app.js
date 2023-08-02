@@ -6,7 +6,7 @@ const cors = require('cors');
 const { errors } = require('celebrate');
 const {limit} = require('./utils/RateLimiter')
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const errorMiddleware = require('./middlewares/errors');
+const errorMiddleware = require('./middlewares/Errors');
 const cookieParser = require('cookie-parser');
 
 const {CURRENT_MONGO_ADDRESS} = require('./utils/Config')
