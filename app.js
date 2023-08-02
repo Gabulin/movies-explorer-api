@@ -10,7 +10,7 @@ const errorMiddleware = require('./middlewares/Errors');
 const cookieParser = require('cookie-parser');
 
 const {CURRENT_MONGO_ADDRESS} = require('./utils/Config')
-const { PORT = 3000 } = process.env;
+const { PORT = 3001 } = process.env;
 
 /*const {
   PORT = 3000,
