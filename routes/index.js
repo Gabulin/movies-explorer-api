@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../middlewares/auth');
 const NotFoundError = require('../errors/NotFoundError');
-const { logout } = require('../controllers/users');
+const { logout } = require('../controllers/Users');
 
 // Подключение маршрутов
 router.use(require('./auth'));
