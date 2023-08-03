@@ -2,7 +2,7 @@ const Movie = require('../models/movie');
 const InvalidError = require('../errors/InvalidError');
 const NotFoundError = require('../errors/NotFoundError');
 const ForbiddenError = require('../errors/ForbiddenError');
-const { MESSAGE_ERROR_NOT_FOUND } = require('../utils/Constants');
+const { MESSAGE_ERROR_NOT_FOUND, MESSAGE_ERROR_INVALID, MESSAGE_ERROR_WRONG_DELETE, MESSAGE_ERROR_WRONG_ID } = require('../utils/Constants');
 
 const getMovies = (req, res, next) => {
   Movie.find({ owner: req.user._id })
@@ -43,7 +43,7 @@ const createMovie = (req, res, next) => {
     .then((data) => res.status(201).send(data))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        return next(new InvalidError('Некорректные данные'));
+        return next(new InvalidError(MESSAGE_ERROR_INVALID));
       }
       return next(err);
     });
@@ -60,11 +60,11 @@ const deleteMovie = (req, res, next) => {
         return movie.deleteOne().then(() => res.send({ deletedMovie: movie }));
       }
 
-      return next(new ForbiddenError('Некорректные данные для удаления'));
+      return next(new ForbiddenError(MESSAGE_ERROR_WRONG_DELETE));
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        next(new InvalidError('Неверный формат идентификатора'));
+        next(new InvalidError(MESSAGE_ERROR_WRONG_ID));
       } else {
         next(err);
       }
