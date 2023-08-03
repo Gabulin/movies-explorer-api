@@ -2,7 +2,7 @@
 const { MESSAGE_ERROR_FATAL } = require('../utils/Constants');
 
 // Экспортируем функцию для обработки ошибок
-module.exports = (err, req, res, next) => {
+module.exports = (err, req, res) => {
   // Извлекаем statusCode и message из объекта ошибки
   const { statusCode = 500, message } = err;
 

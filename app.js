@@ -4,22 +4,23 @@ const helmet = require('helmet');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const { errors } = require('celebrate');
-const {limit} = require('./utils/RateLimiter')
+const cookieParser = require('cookie-parser');
+const { limit } = require('./utils/RateLimiter');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const errorMiddleware = require('./middlewares/Errors');
-const cookieParser = require('cookie-parser');
 
-const {CURRENT_MONGO_ADDRESS} = require('./utils/Config')
+const { CURRENT_MONGO_ADDRESS } = require('./utils/Config');
+
 const { PORT = 3000 } = process.env;
 
-/*const {
+/* const {
   PORT = 3000,
   MONGO = 'mongodb://127.0.0.1:27017/mestodb',
-} = process.env;*/
+} = process.env; */
 
 const app = express();
 
-const router = require('./routes/index')
+const router = require('./routes/index');
 
 app.use(express.json());
 app.use(limit);
@@ -47,9 +48,8 @@ async function main() {
 
 main();
 
-//mongoose.connect(CURRENT_MONGO_ADDRESS);
-//mongoose.connect('mongodb://127.0.0.1/test')
-//mongoose.connect(MONGO);
-
+// mongoose.connect(CURRENT_MONGO_ADDRESS);
+// mongoose.connect('mongodb://127.0.0.1/test')
+// mongoose.connect(MONGO);
 
 app.listen(PORT, () => console.log(`Server listen: ${PORT}`));

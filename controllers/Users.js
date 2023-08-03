@@ -8,16 +8,14 @@ const { CURRENT_JWT_SECRET } = require('../utils/Config');
 
 const getUsers = (req, res, next) => {
   User.findById(req.user._id)
-    .orFail(() => {
-    return next (new NotFoundError("Пользователей не найдено"));
-    })
+    .orFail(() => next(new NotFoundError('Пользователей не найдено')))
     .then((users) => res.send(users))
     .catch(next);
 };
 
 const createUser = (req, res, next) => {
   const {
-    name, email, password
+    name, email, password,
   } = req.body;
 
   bcrypt
@@ -60,7 +58,6 @@ const updateProfile = (req, res, next) => {
       return next(err);
     });
 };
-
 
 const login = (req, res, next) => {
   const { email, password } = req.body;

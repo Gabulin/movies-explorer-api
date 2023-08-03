@@ -8,5 +8,5 @@ const limit = rateLimit({
 });
 
 module.exports = {
-  limit
+  limit,
 };
