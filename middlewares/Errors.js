@@ -10,7 +10,4 @@ module.exports = (err, req, res, next) => {
   res.status(statusCode).send({
     message: statusCode === 500 ? MESSAGE_ERROR_FATAL : message,
   });
-
-  // Вызываем функцию next, чтобы передать управление следующему middleware
-  next();
 };
