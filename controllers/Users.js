@@ -5,7 +5,7 @@ const RegisterError = require('../errors/RegisterError');
 const NotFoundError = require('../errors/NotFoundError');
 const InvalidError = require('../errors/InvalidError');
 const { CURRENT_JWT_SECRET } = require('../utils/Config');
-const { MESSAGE_ERROR_INVALID, MESSAGE_ERROR_NOT_FOUND_USER, MESSAGE_ERRIR_USER_EXISTS } = require('../utils/Constants')
+const { MESSAGE_ERROR_INVALID, MESSAGE_ERROR_NOT_FOUND_USER, MESSAGE_ERRIR_USER_EXISTS } = require('../utils/Constants');
 
 const getUsers = (req, res, next) => {
   User.findById(req.user._id)

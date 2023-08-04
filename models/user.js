@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const AuthError = require('../errors/AuthError');
-const {MESSAGE_ERROR_AUTH_WRONG_DATA, MESSAGE_ERROR_WRONG_EMAIL} = require('../utils/Constants')
+const { MESSAGE_ERROR_AUTH_WRONG_DATA, MESSAGE_ERROR_WRONG_EMAIL } = require('../utils/Constants');
 // Определение схемы пользователя
 const userSchema = new mongoose.Schema({
   email: {
@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema({
 });
 
 // Метод findByCredentials для поиска пользователя по email и проверки пароля
-userSchema.statics.findByCredentials = function (email, password) {
+userSchema.statics.findByCredentials = function findUserByCredentials(email, password) {
   return this.findOne({ email }).select('+password') // Вернуть поле password (select: true)
     .then((user) => {
       if (!user) {

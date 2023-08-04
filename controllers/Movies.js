@@ -2,7 +2,12 @@ const Movie = require('../models/movie');
 const InvalidError = require('../errors/InvalidError');
 const NotFoundError = require('../errors/NotFoundError');
 const ForbiddenError = require('../errors/ForbiddenError');
-const { MESSAGE_ERROR_NOT_FOUND, MESSAGE_ERROR_INVALID, MESSAGE_ERROR_WRONG_DELETE, MESSAGE_ERROR_WRONG_ID } = require('../utils/Constants');
+const {
+  MESSAGE_ERROR_NOT_FOUND,
+  MESSAGE_ERROR_INVALID,
+  MESSAGE_ERROR_WRONG_DELETE,
+  MESSAGE_ERROR_WRONG_ID,
+} = require('../utils/Constants');
 
 const getMovies = (req, res, next) => {
   Movie.find({ owner: req.user._id })

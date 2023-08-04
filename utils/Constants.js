@@ -20,7 +20,6 @@ const MESSAGE_ERROR_WRONG_URL = 'Неккоректные данные ссыл�
 const MESSAGE_ERROR_WRONG_EMAIL = 'Некорректные данные почты';
 const MESSAGE_ERROR_AUTH_WRONG_DATA = 'Некорректные данные почты или пароля';
 
-
 module.exports = {
   STATUS_BAD_REQUEST,
   STATUS_NOT_FOUND,
@@ -38,5 +37,5 @@ module.exports = {
   MESSAGE_ERRIR_USER_EXISTS,
   MESSAGE_ERROR_AUTH_WRONG_DATA,
   MESSAGE_ERROR_WRONG_URL,
-  MESSAGE_ERROR_WRONG_EMAIL
+  MESSAGE_ERROR_WRONG_EMAIL,
 };

@@ -52,4 +52,4 @@ main();
 // mongoose.connect('mongodb://127.0.0.1/test')
 // mongoose.connect(MONGO);
 
-app.listen(PORT, () => console.log(`Server listen: ${PORT}`));
+app.listen(PORT, () => console.log(`Server listen: ${PORT}`)); // eslint-disable-line no-console
