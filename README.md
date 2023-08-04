@@ -1,6 +1,12 @@
 # Серверная часть для проекта - movies-explorer-api
-[Ссылка на сервер](https://gn.movies-explorer.api.nomoreparties.co/)
-[Ссылка на репозиторий](https://github.com/Gabulin/movies-explorer-api/tree/level-1)
+Ссылка на сервер
+
+https://gn.movies-explorer.api.nomoreparties.co/
+
+
+Ссылка на репозиторий
+
+https://github.com/Gabulin/movies-explorer-api/tree/level-1
 
 ## Технологии
 * Node.js
