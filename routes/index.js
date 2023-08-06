@@ -1,24 +1,22 @@
-const express = require('express');
-
-const router = express.Router();
+const router = require('express').Router();
 const auth = require('../middlewares/auth');
-const NotFoundError = require('../errors/NotFoundError');
+const { NotFoundError } = require('../errors');
 const { logout } = require('../controllers/Users');
+
+// Роуты не требующие авторизации
+router.use(require('./auth'));
 
 // Подключение auth middleware
 router.use(auth);
 
 // Подключение маршрутов
-router.use(require('./auth'));
-router.use(require('./users'));
-router.use(require('./movies'));
+router.use('/users', require('./users'));
+router.use('/movies', require('./movies'));
 
 // Роут для выхода из системы
 router.post('/signout', logout);
 
 // Обработка несуществующих маршрутов
-router.use('*', (req, res, next) => {
-  next(new NotFoundError('Ссылка не найдена'));
-});
+router.use('*', (_, res, next) => next(new NotFoundError()));
 
 module.exports = router;

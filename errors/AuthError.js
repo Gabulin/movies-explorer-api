@@ -1,9 +1,12 @@
-const { STATUS_AUTH } = require('../utils/Constants');
+const {
+  HTTP_STATUS_UNAUTHORIZED,
+  MESSAGE_ERROR_AUTH_REQUIRED,
+} = require('../utils/Constants');
 
 class AuthError extends Error {
-  constructor(message) {
+  constructor(message = MESSAGE_ERROR_AUTH_REQUIRED) {
     super(message);
-    this.statusCode = STATUS_AUTH;
+    this.statusCode = HTTP_STATUS_UNAUTHORIZED;
   }
 }
 

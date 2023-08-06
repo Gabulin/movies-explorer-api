@@ -1,13 +1,19 @@
-// Подключаем константу MESSAGE_ERROR_FATAL из файла ../utils/Constants
-const { MESSAGE_ERROR_FATAL } = require('../utils/Constants');
+const {
+  MESSAGE_ERROR_FATAL,
+  HTTP_STATUS_INTERNAL_SERVER_ERROR: STATUS_FATAL,
+} = require('../utils/Constants');
 
-// Экспортируем функцию для обработки ошибок
-module.exports = (err, req, res) => {
-  // Извлекаем statusCode и message из объекта ошибки
-  const { statusCode = 500, message } = err;
+module.exports = (err, _, res, next) => {
+  const {
+    statusCode = STATUS_FATAL,
+    message,
+  } = err;
 
-  // Отправляем ответ с соответствующим статусом и сообщением
   res.status(statusCode).send({
-    message: statusCode === 500 ? MESSAGE_ERROR_FATAL : message,
+    message: statusCode === STATUS_FATAL
+      ? MESSAGE_ERROR_FATAL
+      : message,
   });
+
+  return next(err);
 };

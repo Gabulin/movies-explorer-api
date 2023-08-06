@@ -1,17 +1,21 @@
+const { ValidationError } = require('mongoose').Error;
 const Movie = require('../models/movie');
-const InvalidError = require('../errors/InvalidError');
-const NotFoundError = require('../errors/NotFoundError');
-const ForbiddenError = require('../errors/ForbiddenError');
 const {
-  MESSAGE_ERROR_NOT_FOUND,
-  MESSAGE_ERROR_INVALID,
+  InvalidError,
+  NotFoundError,
+  ForbiddenError,
+} = require('../errors');
+const {
+  HTTP_STATUS_OK,
+  HTTP_STATUS_CREATED,
+  MESSAGE_VIDEO_DELETED,
   MESSAGE_ERROR_WRONG_DELETE,
-  MESSAGE_ERROR_WRONG_ID,
 } = require('../utils/Constants');
 
 const getMovies = (req, res, next) => {
   Movie.find({ owner: req.user._id })
-    .then((movies) => res.status(200).send(movies))
+    .populate(['owner'])
+    .then((movies) => res.status(HTTP_STATUS_OK).send(movies))
     .catch(next);
 };
 
@@ -39,45 +43,39 @@ const createMovie = (req, res, next) => {
     image,
     trailerLink,
     thumbnail,
-    owner: req.user._id,
     movieId,
     nameRU,
     nameEN,
+    owner: req.user._id,
   })
-    .then((movie) => movie.populate('owner').execPopulate())
-    .then((data) => res.status(201).send(data))
+    .then((movie) => movie.populate('owner'))
+    .then((data) => res.status(HTTP_STATUS_CREATED).send(data))
     .catch((err) => {
-      if (err.name === 'ValidationError') {
-        return next(new InvalidError(MESSAGE_ERROR_INVALID));
+      if (err instanceof ValidationError) {
+        return next(new InvalidError());
       }
+
       return next(err);
     });
 };
 
 const deleteMovie = (req, res, next) => {
   Movie.findById(req.params.movieId)
+    .orFail(new NotFoundError())
     .then((movie) => {
-      if (!movie) {
-        throw new NotFoundError(MESSAGE_ERROR_NOT_FOUND);
+      if (!movie.owner.equals(req.user._id)) {
+        return next(new ForbiddenError(MESSAGE_ERROR_WRONG_DELETE));
       }
 
-      if (movie.owner.equals(req.user._id)) {
-        return movie.deleteOne().then(() => res.send({ deletedMovie: movie }));
-      }
-
-      return next(new ForbiddenError(MESSAGE_ERROR_WRONG_DELETE));
+      return movie.deleteOne().then(() => res.send({
+        message: MESSAGE_VIDEO_DELETED,
+      })).catch(next);
     })
-    .catch((err) => {
-      if (err.name === 'CastError') {
-        next(new InvalidError(MESSAGE_ERROR_WRONG_ID));
-      } else {
-        next(err);
-      }
-    });
+    .catch(next);
 };
 
 module.exports = {
-  getMovies,
-  createMovie,
   deleteMovie,
+  createMovie,
+  getMovies,
 };

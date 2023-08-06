@@ -1,9 +1,12 @@
-const { STATUS_BAD_REQUEST } = require('../utils/Constants');
+const {
+  HTTP_STATUS_BAD_REQUEST,
+  MESSAGE_ERROR_INVALID,
+} = require('../utils/Constants');
 
 class InvalidError extends Error {
-  constructor(message) {
+  constructor(message = MESSAGE_ERROR_INVALID) {
     super(message);
-    this.statusCode = STATUS_BAD_REQUEST;
+    this.statusCode = HTTP_STATUS_BAD_REQUEST;
   }
 }
 

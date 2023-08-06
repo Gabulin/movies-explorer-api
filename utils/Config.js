@@ -1,8 +1,33 @@
-const { NODE_ENV, JWT_SECRET, MONGO_ADDRESS } = process.env;
-const CURRENT_JWT_SECRET = NODE_ENV === 'production' ? JWT_SECRET : 'secret-key';
-const CURRENT_MONGO_ADDRESS = NODE_ENV === 'production' ? MONGO_ADDRESS : 'mongodb://127.0.0.1:27017/bitfilmsdb';
+require('dotenv').config();
+
+const origin = [
+  'https://gn.movies-explorer.api.nomoreparties.co',
+];
+
+const {
+  PORT = 3000,
+  REACT_APP_API_URL = null,
+} = process.env;
+
+if (process.env.NODE_ENV !== 'production') {
+  origin.push(`http://localhost:${PORT}`);
+} else if (REACT_APP_API_URL) {
+  origin.push(REACT_APP_API_URL);
+}
+
+const {
+  JWT_KEY = 'jwt',
+  JWT_SECRET = 'secret-key',
+  MONGODB_BASE = 'bitfilmsdb',
+  MONGODB_URI = `mongodb://127.0.0.1:27017/${MONGODB_BASE}`,
+} = process.env;
+
+console.info({ origin });
 
 module.exports = {
-  CURRENT_JWT_SECRET,
-  CURRENT_MONGO_ADDRESS,
+  PORT,
+  JWT_KEY,
+  JWT_SECRET,
+  MONGODB_URI,
+  origin,
 };

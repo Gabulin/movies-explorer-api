@@ -1,8 +1,12 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
-const AuthError = require('../errors/AuthError');
-const { MESSAGE_ERROR_AUTH_WRONG_DATA, MESSAGE_ERROR_WRONG_EMAIL } = require('../utils/Constants');
+const { AuthError } = require('../errors');
+const {
+  MESSAGE_ERROR_AUTH_WRONG_DATA,
+  MESSAGE_ERROR_WRONG_EMAIL,
+} = require('../utils/Constants');
+
 // Определение схемы пользователя
 const userSchema = new mongoose.Schema({
   email: {
@@ -34,6 +38,7 @@ userSchema.statics.findByCredentials = function findUserByCredentials(email, pas
       if (!user) {
         throw new AuthError(MESSAGE_ERROR_AUTH_WRONG_DATA);
       }
+
       return bcrypt.compare(password, user.password)
         .then((matched) => {
           if (!matched) {
@@ -45,5 +50,4 @@ userSchema.statics.findByCredentials = function findUserByCredentials(email, pas
     });
 };
 
-// Экспорт модели пользователя
 module.exports = mongoose.model('user', userSchema);
